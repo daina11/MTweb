@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
-import index from '@/pages/index'
 import Login from '@/pages/Login'
 import Home from '@/pages/Home'
 Vue.use(Router)
@@ -11,9 +9,9 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'index',
-      redirect: '/index',
-      component: index,
+      name: 'Default',
+      redirect: '/home',
+      component: Home,
       meta: {
         requireAuth: true
       }
@@ -28,16 +26,22 @@ export default new Router({
       path: '/home',
       name: 'Home',
       component: Home,
-      redirect:'/index',
-      children:[
+      redirect: '/index',
+      children: [
         {
-          path:'/index',
-          name:'index',
-          component:index,
-          meta:{
-            requireAuth:true
+          path: '/index',
+          name: 'index',
+          component: () => import('../pages/Home'),
+          meta: {
+            requireAuth: true
           }
-        }
+        },
+        {
+          path: '/jotter',
+          name: 'Jotter',
+          component: () => import('../components/shopdetail/spindex')
+        },
+
       ]
     },
   ]
