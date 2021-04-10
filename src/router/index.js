@@ -37,8 +37,8 @@ export default new Router({
           }
         },
         {
-          path: '/jotter',
-          name: 'Jotter',
+          path: '/spindex',
+          name: 'spindex',
           component: () => import('../components/shopdetail/spindex')
         },
 
