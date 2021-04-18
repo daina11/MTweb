@@ -1,7 +1,7 @@
 <template>
     <div>
         <headerd></headerd>
-         <router-view/>
+         <router-view class="bd"/>
     </div>
 </template>
 <script>
@@ -16,5 +16,8 @@ export default {
   .nav-menu {
     /*margin-bottom: 40px;*/
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.05);
+  }
+  .bd{
+    margin: 2%;
   }
 </style>

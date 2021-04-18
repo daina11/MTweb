@@ -1,20 +1,28 @@
 <template>
-  <el-container>
-      <topcategory></topcategory>
-  </el-container>
+    <div>
+             <topcategory></topcategory>
+       <splist></splist>
+ 
+     
+</div>
 </template>
 <script>
 import topcategory from './topcategory'
+import splist from './splist'
 export default {
     name:'spindex',
   data() {
     return {};
   },
   components: {
-      topcategory
+      topcategory,
+      splist
   },
    created() {
        
   },
 };
 </script>
+<style scoped lang="scss">
+
+</style>
