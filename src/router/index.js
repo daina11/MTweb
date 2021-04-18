@@ -10,7 +10,7 @@ export default new Router({
     {
       path: '/',
       name: 'Default',
-      redirect: '/home',
+      redirect: '/index',
       component: Home,
       meta: {
         requireAuth: true
@@ -31,15 +31,15 @@ export default new Router({
         {
           path: '/index',
           name: 'index',
-          component: () => import('../pages/Home'),
+          component: () => import('../components/shopdetail/spindex'),
           meta: {
             requireAuth: true
           }
         },
         {
-          path: '/spindex',
-          name: 'spindex',
-          component: () => import('../components/shopdetail/spindex')
+          path: '/spdetail',
+          name: 'spdetail',
+          component: () => import('../components/shopdetail/spdetail')
         },
 
       ]

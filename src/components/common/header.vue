@@ -1,7 +1,7 @@
 <template>
   <div class="head">
     <el-row :gutter="20">
-      <el-col :span="6">
+      <el-col :span="8">
         <p>点外卖吧！</p>
       </el-col>
       <el-col :span="8">

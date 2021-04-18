@@ -1,13 +1,15 @@
 <template>
     <div>
         <headerd></headerd>
+         <router-view/>
     </div>
 </template>
 <script>
 import headerd from '../components/common/header'
 export default {
     name:'home',
-    components: {headerd}
+    components: {headerd},
+    
 }
 </script>
 <style>
