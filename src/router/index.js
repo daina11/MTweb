@@ -31,15 +31,15 @@ export default new Router({
         {
           path: '/index',
           name: 'index',
-          component: () => import('../components/shopdetail/spindex'),
+          component: () => import('../components/shopindex/spindex'),
           meta: {
             requireAuth: true
           }
         },
         {
-          path: '/spdetail',
-          name: 'spdetail',
-          component: () => import('../components/shopdetail/spdetail')
+          path: '/sdindex',
+          name: 'sdindex',
+          component: () => import('../components/shopdetail/sdindex')
         },
 
       ]

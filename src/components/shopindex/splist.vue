@@ -1,10 +1,10 @@
 <template>
   <div class="main">
     <el-row>
-      <el-col :span="4" v-for="(o, index) in 9" :key="o" span="4">
+      <el-col :span="4" v-for="(item,index) in data" :key="index">
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
           <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            :src="item.img"
             class="image"
           />
           <div style="padding: 14px;">
@@ -23,8 +23,27 @@
 export default {
   name: "splist",
   data() {
-    return {};
-  }
+    return {
+      data:[]
+    };
+  },
+     created() {
+    this.axios
+      .get("ms", {})
+      .then(res => {
+        this.data = res.data.goods;
+        //a
+      })
+      .catch(err => {});
+  },
+   methods: {
+      todetail(id) {
+      this.$router.push({
+        path: "sdindex",
+        query: { id: id }
+      });
+      },
+   }
 };
 </script>
 <style scoped lang="scss">
@@ -55,6 +74,7 @@ margin-top: 50px;
   }
 
   .image {
+    height: 160px;
     width: 100%;
     display: block;
   }
