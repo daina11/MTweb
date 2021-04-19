@@ -18,6 +18,7 @@ body{
    background-color: #f2f5f6;
 }
 #app {
+  overflow:-Scroll;overflow-x:hidden;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
