@@ -14,7 +14,7 @@ export default {
   },
   components: {
     topcategory,
-    splist
+    splist,
   },
   created() {}
 };

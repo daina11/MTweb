@@ -2,13 +2,20 @@
     <div>
         <headerd></headerd>
          <router-view class="bd"/>
+         <vfooter></vfooter>
+         <backtop></backtop>
     </div>
 </template>
 <script>
 import headerd from '../components/common/header'
+import vfooter from '../components/common/footer'
+import backtop from '../components/common/backtop'
 export default {
     name:'home',
-    components: {headerd},
+    components: {headerd,
+                vfooter,
+                backtop
+    },
     
 }
 </script>
