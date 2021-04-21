@@ -1,7 +1,7 @@
 <template>
     <div class="footer">
         <el-row>
-            hahah
+          <h1>@copyright <span>daina</span></h1> 
         </el-row>
     </div>
 </template>
@@ -20,5 +20,12 @@ export default {
     width: 100%;
     height: 100px;
     background-color: white;
+}
+h1{
+    margin-top: 2%;
+    color: #909399
+}
+span{
+    color: #606266
 }
 </style>

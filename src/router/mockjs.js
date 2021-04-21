@@ -9,7 +9,7 @@ function getData(options) {
     let fenlei = [];
     let goods =[];
     let congoods=[];
-    for (let i = 1; i <= 9; i++) {
+    for (let i = 1; i <= 10; i++) {
         let fenlei1 = {
             id: i,
             name: Random.csentence(2, 4),//分类
@@ -22,7 +22,9 @@ function getData(options) {
         let good = {
             id: i,
             name: Random.csentence(2, 4),//名字
-            img:Random.dataImage()
+            img:Random.dataImage(),
+            location:Random.county(true),
+            money:Random.integer( 10, 50 )
         }
         goods.push(good)
     }
@@ -30,7 +32,9 @@ function getData(options) {
         let good = {
             id: i,
             name: Random.csentence(2, 4),//名字
-            img:Random.dataImage()
+            img:Random.dataImage(),
+            location:Random.county(true),
+            money:Random.integer( 10, 50 )
         }
         congoods.push(good)
     }

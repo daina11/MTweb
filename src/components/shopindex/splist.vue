@@ -5,10 +5,10 @@
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
           <img :src="item.img" class="image" />
           <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
+            <span class="sname">{{item.name}}</span>
             <div class="bottom clearfix">
-              <time class="time">asadadads</time>
-              <el-button type="text" class="button">操作按钮</el-button>
+              <time class="time">{{item.location}}</time>
+              <span class="money">￥{{item.money}}起</span>
             </div>
           </div>
         </el-card>
@@ -54,7 +54,7 @@ export default {
           page: this.page
         })
         .then(res => {
-          this.data= this.data.concat(res.data.goods);
+          this.data = this.data.concat(res.data.goods);
         });
     }
   }
@@ -75,20 +75,37 @@ export default {
   margin: 10px;
 }
 .time {
+  max-width: 50%;
+  float: left;
   font-size: 13px;
-  color: #999;
+  color: #606266;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .bottom {
   margin-top: 13px;
   line-height: 12px;
 }
-
-.button {
-  padding: 0;
-  float: right;
+.money {
+  margin-top: 2%;
+  margin-left: 6%;
+  color: #f56c6c;
+  font-size: 20px;
 }
-
+.clearfix {
+  display: flex;
+  line-height: 20px;
+  margin: 5px;
+}
+.sname {
+  color: #303133;
+  font-size: 18px;
+  font-weight: 500;
+}
 .image {
   height: 160px;
   width: 100%;
