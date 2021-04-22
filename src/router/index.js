@@ -13,7 +13,7 @@ export default new Router({
       redirect: '/index',
       component: Home,
       meta: {
-        requireAuth: true
+        requireAuth: false
       }
     },
 
@@ -33,7 +33,7 @@ export default new Router({
           name: 'index',
           component: () => import('../components/shopindex/spindex'),
           meta: {
-            requireAuth: true
+            requireAuth: false
           }
         },
         {

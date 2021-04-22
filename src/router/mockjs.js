@@ -9,6 +9,7 @@ function getData(options) {
     let fenlei = [];
     let goods =[];
     let congoods=[];
+
     for (let i = 1; i <= 10; i++) {
         let fenlei1 = {
             id: i,
@@ -38,9 +39,17 @@ function getData(options) {
         }
         congoods.push(good)
     }
+    //个人信息
+    let info = {
+        id: Random.integer( 10, 50 ),
+        name: Random.csentence(2, 4),//名字
+        img:Random.dataImage(),//头像 
+    }
+ 
     return {
         fenlei: fenlei,
         goods:goods,
-        congoods:congoods
+        congoods:congoods,
+        info:info
     }
 }
