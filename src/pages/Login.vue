@@ -42,7 +42,6 @@ export default {
   methods: {
     login() {
       var _this = this;
-      console.log(this.$store.state)
       this.axios
         .post("/login", {
           username: this.loginForm.username,
@@ -59,10 +58,12 @@ export default {
             }).catch(() => {});
 
             //this.$router.push({ path: "/index" });
+          }else{
+              this.$message.error('用户名或密码错误，请重新输入！');
           }
         })
         .catch(err => {
-          console.log(111111)
+        
         });
     }
   }

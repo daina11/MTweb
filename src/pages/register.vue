@@ -24,14 +24,7 @@
       <el-form-item label="邮箱:" prop="email">
         <el-input v-model="ruleForm.email"></el-input>
       </el-form-item>
-      <el-form-item style="width: 80%">
-        <el-button
-          type="primary"
-          native-type="submit"
-          style="width: 100%;background: #505458;border: none"
-          @click="resetForm('ruleForm')"
-        >重置</el-button>
-      </el-form-item>
+ 
       <el-form-item style="width: 80%">
         <el-button
           type="primary"
@@ -40,6 +33,14 @@
           @click="submitForm('ruleForm')"
         >注册</el-button>
       </el-form-item>
+           <el-form-item style="width: 80%">
+        <el-button
+          type="primary"
+          style="width: 100%;background: #505458;border: none"
+          @click="resetForm('ruleForm')"
+        >重置</el-button>
+      </el-form-item>
+      <el-link type="primary" href="/login">已有账号？点击登陆！</el-link>
     </el-form>
   </div>
 </template>
@@ -99,7 +100,26 @@ export default {
       this.$refs[formName].validate(valid => {
         //验证通过的时候
         if (valid) {
-          console.log(this.ruleForm);
+          //console.log(this.ruleForm);
+          this.axios
+            .post("/register", {
+              username: this.ruleForm.username,
+              password: this.ruleForm.pass,
+              email: this.ruleForm.email
+            })
+            .then(res => {
+              console.log(res);
+              if (res.data.code === 200) {
+                this.$message({
+                  message: "注册成功，请前往登陆！",
+                  type: "success"
+                });
+                 this.$refs[formName].resetFields();
+              } else {
+               this.$message.error('用户已存在，请重新注册！');
+                this.$refs[formName].resetFields();
+              }
+            });
         } else {
           //验证失败
           console.log("error submit!!");
