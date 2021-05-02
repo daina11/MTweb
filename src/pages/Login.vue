@@ -34,7 +34,8 @@ export default {
     return {
       loginForm: {
         username: "",
-        password: ""
+        password: "",
+        photo:""
       },
       responseResult: []
     };
@@ -48,7 +49,8 @@ export default {
           password: this.loginForm.password
         })
         .then(res => {
-          if (res.data.code === 200) {
+          if (res.data.username != null) {
+            _this.loginForm.photo=res.data.photo
             _this.$store.commit("login", _this.loginForm); //第一个参数是要触发的方法，第二个是传递的参数
 
             //获取登陆前页面的路径并跳转，如果该路径不存在，则跳转到首页

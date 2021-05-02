@@ -12,6 +12,22 @@
       :hide-required-asterisk="true"
     >
       <h3 class="login_title">系统注册</h3>
+      <el-form-item style="width: 80%">
+        <el-avatar :src="photo" class="avatar"></el-avatar>
+        <!-- <img :src="geren.avatar" alt /> -->
+        <el-upload
+          action="http://localhost:8081/api/upavatar"
+          :show-file-list="false"
+          :accept="'image/*'"
+          :on-success="handleSuccess"
+        >
+          <el-button
+            type="primary"
+            native-type="submit"
+            style="width: 100%;background: #505458;border: none"
+          >上传头像</el-button>
+        </el-upload>
+      </el-form-item>
       <el-form-item label="用户名:" prop="username">
         <el-input v-model="ruleForm.username" autocomplete="off"></el-input>
       </el-form-item>
@@ -24,7 +40,7 @@
       <el-form-item label="邮箱:" prop="email">
         <el-input v-model="ruleForm.email"></el-input>
       </el-form-item>
- 
+
       <el-form-item style="width: 80%">
         <el-button
           type="primary"
@@ -33,7 +49,7 @@
           @click="submitForm('ruleForm')"
         >注册</el-button>
       </el-form-item>
-           <el-form-item style="width: 80%">
+      <el-form-item style="width: 80%">
         <el-button
           type="primary"
           style="width: 100%;background: #505458;border: none"
@@ -79,6 +95,8 @@ export default {
         pass: "",
         email: ""
       },
+      //头像
+      photo:"",
       rules: {
         username: [{ validator: checkUser, trigger: "blur" }],
         pass: [{ validator: validatePass, trigger: "blur" }],
@@ -95,6 +113,12 @@ export default {
     };
   },
   methods: {
+    handleSuccess: function(result) {
+         console.log(111111111111111)
+      console.log(result)
+      this.photo=result
+     
+    },
     //注册提交表单
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
@@ -114,9 +138,9 @@ export default {
                   message: "注册成功，请前往登陆！",
                   type: "success"
                 });
-                 this.$refs[formName].resetFields();
+                this.$refs[formName].resetFields();
               } else {
-               this.$message.error('用户已存在，请重新注册！');
+                this.$message.error("用户已存在，请重新注册！");
                 this.$refs[formName].resetFields();
               }
             });
@@ -158,8 +182,12 @@ body {
   box-shadow: 0 0 25px #cac6c6;
 }
 .login_title {
-  margin: 0px auto 40px auto;
+  margin: 0px auto 40px 5%;
   text-align: center;
   color: #505458;
+}
+.avatar{
+  width: 60px;
+  height: 60px;
 }
 </style>

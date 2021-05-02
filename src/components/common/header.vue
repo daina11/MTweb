@@ -34,7 +34,7 @@
               </div>
             </div>
             <div class="sl" slot="reference">
-              <el-avatar :src="info.img"></el-avatar>
+              <el-avatar :src="photo"></el-avatar>
             </div>
           </el-popover>
         </div>
@@ -53,7 +53,9 @@ export default {
       login: false,
       //个人信息
       info: [],
-      username: ""
+      username: "",
+      //头像
+      photo:""
     };
   },
   computed: {},
@@ -78,14 +80,15 @@ export default {
     //判断是否登陆
     if (this.$store.state.user.username) {
       //方法一登陆成功获取头像等个人信息
-      this.axios
-        .get("ms", {})
-        .then(res => {
-          this.info = res.data.info;
-          //a
-        })
-        .catch(err => {});
+      // this.axios
+      //   .get("ms", {})
+      //   .then(res => {
+      //     this.info = res.data.info;
+      //     //a
+      //   })
+      //   .catch(err => {});
       //方法二直接从缓存读取或者用上面的方法向后台读取
+      this.photo= this.$store.state.user.photo;
       this.username = this.$store.state.user.username;
       this.login = true;
       console.log(this.$store.state.user.username);
