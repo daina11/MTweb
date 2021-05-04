@@ -88,7 +88,12 @@ export default {
       //   })
       //   .catch(err => {});
       //方法二直接从缓存读取或者用上面的方法向后台读取
-      this.photo= this.$store.state.user.photo;
+      
+      //json格式化缓存的数据
+      var user=JSON.parse(window.localStorage.user)
+    
+      this.photo= user.photo;
+     
       this.username = this.$store.state.user.username;
       this.login = true;
       console.log(this.$store.state.user.username);

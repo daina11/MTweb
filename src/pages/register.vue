@@ -12,22 +12,7 @@
       :hide-required-asterisk="true"
     >
       <h3 class="login_title">系统注册</h3>
-      <el-form-item style="width: 80%">
-        <el-avatar :src="photo" class="avatar"></el-avatar>
-        <!-- <img :src="geren.avatar" alt /> -->
-        <el-upload
-          action="http://localhost:8081/api/upavatar"
-          :show-file-list="false"
-          :accept="'image/*'"
-          :on-success="handleSuccess"
-        >
-          <el-button
-            type="primary"
-            native-type="submit"
-            style="width: 100%;background: #505458;border: none"
-          >上传头像</el-button>
-        </el-upload>
-      </el-form-item>
+      
       <el-form-item label="用户名:" prop="username">
         <el-input v-model="ruleForm.username" autocomplete="off"></el-input>
       </el-form-item>
@@ -113,12 +98,7 @@ export default {
     };
   },
   methods: {
-    handleSuccess: function(result) {
-         console.log(111111111111111)
-      console.log(result)
-      this.photo=result
-     
-    },
+    
     //注册提交表单
     submitForm(formName) {
       this.$refs[formName].validate(valid => {

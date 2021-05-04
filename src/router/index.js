@@ -42,6 +42,14 @@ export default new Router({
           }
         },
         {
+          path: '/my_detail',
+          name: 'mdindex',
+          component: () => import('../components/mydetail/mdindex'),
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
           path: '/sdindex',
           name: 'sdindex',
           component: () => import('../components/shopdetail/sdindex')
