@@ -27,11 +27,29 @@ export default {
         }
     },
      methods: {
+       //上传成功后修改
     handleSuccess: function(result) {
-      console.log(result)
+      this.axios.post("/editinfo",{
+        username:this.$store.state.user.username
+      }).then(res=>{
+        if(res.data.username!=null){
+          window.localStorage.setItem('user', JSON.stringify(res.data))
+          // this.$store.commit("login", _this.loginForm);
+         
+        }else{
+
+        }
+      }).catch(err => {
+        
+        });
       this.photo=result
     }
     },
+    created(){
+      
+      var user=JSON.parse(window.localStorage.user)
+      this.photo= user.photo;
+    }
 }
 </script>
 <style scoped lang="scss">
