@@ -28,7 +28,7 @@
         <el-input v-model="infoForm.email"></el-input>
       </el-form-item>
       <el-form-item>
-    <el-button type="primary" @click="submitForm()">提交</el-button>
+    <el-button class="submit" type="primary" @click="submitForm()">保存修改</el-button>
   </el-form-item>
     </el-form>
   </div>
@@ -111,5 +111,8 @@ export default {
     padding: 1%;
     width: 30%;
   }
+}
+.submit{
+  margin-left: -16%
 }
 </style>

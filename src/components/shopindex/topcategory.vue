@@ -1,9 +1,9 @@
 <template>
   <div class="main">
     <el-row>
-      <el-col :span="3" v-for="(item,index) in data.slice(0,8)" :key="index" :offset="2">
+      <el-col :span="3" v-for="(item,index) in data" :key="index" :offset="2">
         <el-card :body-style="{ padding: '0px' }" shadow="hover" @click.native="todetail(item.id)">
-          <img :src="item.img" class="image" />
+          <img :src="item.picture" class="image" />
         </el-card>
         <div style="padding: 14px;" class="name">
           <span>{{item.name}}</span>
@@ -22,10 +22,9 @@ export default {
   },
   created() {
     this.axios
-      .get("ms", {})
+      .post("/ShopCategoryAll", {})
       .then(res => {
-        this.data = res.data.fenlei;
-        //a
+        this.data = res.data.content;
       })
       .catch(err => {});
   },
@@ -48,7 +47,7 @@ export default {
 }
 .name {
   font-size: 20px;
-  margin-left: -55px;
+  margin-left: -80px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

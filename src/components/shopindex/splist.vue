@@ -3,19 +3,19 @@
     <el-row>
       <el-col :span="4" v-for="(item,index) in data" :key="index">
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
-          <img :src="item.img" class="image" />
+          <img :src="item.goodimg" class="image" />
           <div style="padding: 14px;">
             <span class="sname">{{item.name}}</span>
             <div class="bottom clearfix">
               <time class="time">{{item.location}}</time>
-              <span class="money">￥{{item.money}}起</span>
+              <span class="money">￥{{item.price}}起</span>
             </div>
           </div>
         </el-card>
       </el-col>
     </el-row>
     <div class="more">
-      <el-button type="primary" round v-if="page<page_count" @click="loadMore">加载更多...</el-button>
+      <el-button type="primary" round v-if="page<page_count-1" @click="loadMore">加载更多...</el-button>
       <el-button type="info" round plain disabled v-else>没有更多了</el-button>
     </div>
   </div>
@@ -26,15 +26,20 @@ export default {
   data() {
     return {
       data: [],
-      page: 1,
-      page_count: 333
+      page: 0,
+      page_count: '',
+
     };
   },
   created() {
+    var that = this
     this.axios
-      .get("ms", {})
+      .post("getIndexGoodsList", {
+        page: this.page
+      })
       .then(res => {
-        this.data = res.data.goods;
+        this.data = res.data.content;
+        this.page_count=res.data.totalPages;
         //a
       })
       .catch(err => {});
@@ -49,12 +54,12 @@ export default {
     loadMore() {
       this.page += 1;
       this.axios
-        .get("ms", {
+        .post("getIndexGoodsList", {
           //把页数传递到后台
           page: this.page
         })
         .then(res => {
-          this.data = this.data.concat(res.data.goods);
+          this.data = this.data.concat(res.data.content);
         });
     }
   }
