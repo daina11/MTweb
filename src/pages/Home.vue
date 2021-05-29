@@ -2,7 +2,7 @@
     <div>
         <headerd></headerd>
          <router-view class="bd"/>
-         <vfooter></vfooter>
+         <!-- <vfooter></vfooter> -->
          <backtop></backtop>
     </div>
 </template>
@@ -24,7 +24,7 @@ export default {
     /*margin-bottom: 40px;*/
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.05);
   }
-  .bd{
+  /* .bd{
     margin: 2%;
-  }
+  } */
 </style>

@@ -2,10 +2,10 @@
   <div class="head">
     <el-row :gutter="20">
       <el-col :span="8">
-        <p class="slogan">点外卖吧！</p>
+        <el-link href="/index" class="slogan" :underline="false">点外卖吧！</el-link>
       </el-col>
       <el-col :span="8">
-        <div style="margin-top: 8px;">
+        <div style="margin-top: 8px;margin-bottom: 8px;">
           <el-input
             placeholder="请输入搜索内容"
             v-model="keywords"
@@ -117,6 +117,8 @@ export default {
   border-bottom: 1px solid #e4e7ed;
 }
 .slogan {
+  margin-top: 3%;
+  font-size: 18px;
   font-weight: 700;
 }
 .click-login {

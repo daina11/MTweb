@@ -10,7 +10,7 @@ function getData(options) {
     let goods =[];
     let congoods=[];
 
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 8; i++) {
         let fenlei1 = {
             id: i,
             name: Random.csentence(2, 4),//分类
@@ -19,13 +19,14 @@ function getData(options) {
         fenlei.push(fenlei1)
     }
     //商品
-    for (let i = 1; i <= 12; i++) {
+    for (let i = 1; i <= 1; i++) {
         let good = {
             id: i,
             name: Random.csentence(2, 4),//名字
             img:Random.dataImage(),
             location:Random.county(true),
-            money:Random.integer( 10, 50 )
+            money:Random.integer( 10, 50 ),
+            store:50
         }
         goods.push(good)
     }

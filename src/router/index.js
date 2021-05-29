@@ -52,7 +52,7 @@ export default new Router({
         {
           path: '/sdindex',
           name: 'sdindex',
-          component: () => import('../components/shopdetail/sdindex')
+          component: () => import('../components/goodscategory/gcindex')
         },
 
       ]
