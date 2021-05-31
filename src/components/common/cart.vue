@@ -1,49 +1,55 @@
 <template>
-    <div class="cart">
-          <div class="text"><i class="el-icon-shopping-cart-2">:</i>
-          <div class="sum">¥12</div>
-          <div><el-button type="warning" round>去结账</el-button></div>
-          </div>
-          
+  <div class="cart">
+    <div class="text-a">
+      <i class="el-icon-shopping-cart-2">:</i>
+      <div class="sum">¥{{price}}</div>
+      <div>
+        <el-button  round>去结账</el-button>
+      </div>
     </div>
+  </div>
 </template>
 <script>
 export default {
-    name:'cart',
-    data(){
-        return{
-
-        }
-    }
-}
+  name: "cart",
+  props:["price"],
+  data() {
+    return {};
+  }
+};
 </script>
 <style scoped lang="scss">
-.cart{
-    margin: 0;
-    width: 100%;
-    height: 100px;
-    background: #ffffff;
-    .text{
-        display: flex;
-        float: right;
-        width: auto;
-        height: 100%;
-        color: #ffffff;
-        background-color: 	#606266;
-        font-size: 60px;
-        padding-left: 3%;
-        padding-right: 3%;
-
-        .sum{
-      
-            float: none
-        }
-       
-        .el-icon-shopping-cart-2{
-            float: left;
-            margin: 0 2%;
-        }
+.cart {
+  margin: 0;
+  width: 100%;
+  height: 100px;
+  background: #303133;
+  .text-a {
+    display: flex;
+    float: right;
+    width: auto;
+    height: 100%;
+    color: #ffffff;
+    background-color: #e6a23c;
+    font-size: 60px;
+    padding-left: 3%;
+    padding-right: 3%;
+    .sum {
+      float: none;
+      margin: auto;
     }
+    .el-icon-shopping-cart-2 {
+      float: left;
+      margin: auto;
+          padding-bottom: 5%;
+              margin-left: -55%;
+    }
+    .el-button{
+        margin-left: 20%;
+        background-color: #303133;
+        color: #ffffff;
+        border: 0;
+    }
+  }
 }
-
 </style>

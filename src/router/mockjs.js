@@ -19,7 +19,7 @@ function getData(options) {
         fenlei.push(fenlei1)
     }
     //商品
-    for (let i = 1; i <= 1; i++) {
+    for (let i = 1; i <= 20; i++) {
         let good = {
             id: i,
             name: Random.csentence(2, 4),//名字
