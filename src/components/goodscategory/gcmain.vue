@@ -1,21 +1,21 @@
 <template>
   <div>
-    <div class="main" v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
+    <div class="main" v-infinite-scroll="load" :infinite-scroll-disabled="loading">
       <el-row class="row" v-for="(item,index) in goods" :key="index">
         <el-col :span="24">
           <div class="g">
-            <el-image :src="item.img" fit="fit"></el-image>
+            <el-image :src="item.goodimg" fit="fit"></el-image>
             <div class="text">
               <div class="g-name">{{item.name}}</div>
               <div class="g-store">还剩{{item.store}}份</div>
-              <div class="g-location">{{item.location}}</div>
+              <div class="g-location">地点: {{item.shop.location}}</div>
             </div>
             <div class="add" tabindex="0" outline="0" @blur="handleChange">
-              <div class="price">¥{{item.money}}</div>
+              <div class="price">¥{{item.price}}</div>
               <span class="number">数量：</span>
               <el-input-number
                 @blur="handleChange"
-                @change="store(index,item.money)"
+                @change="store(index,item.price)"
                 v-model="list[index]"
                 size="mini"
                 :min="0"
@@ -27,7 +27,7 @@
         </el-col>
       </el-row>
       <p v-if="loading">加载中...</p>
-      <p v-if="noMore">没有更多了</p>
+      <p v-else="loading=='true'">没有更多了</p>
     </div>
   </div>
 </template>
@@ -36,29 +36,27 @@ export default {
   name: "gcmain",
   data() {
     return {
-      id: this.$route.query.id,
-      count: 10,
+      cid: this.$route.query.id,
       loading: false,
       goods: {},
       list: [],
       cart: 0,
-      sumlist: []
+      sumlist: [],
+      page: 0,
+      page_count: ""
     };
   },
-  computed: {
-    noMore() {
-      return this.count >= 20;
-    },
-    disabled() {
-      var that = this;
-      return that.loading || that.noMore;
-    }
+  computed: { 
   },
   created() {
     this.axios
-      .get("ms", {})
+      .post("getGoodsListBycid", {
+        cid:parseInt(this.cid) ,
+        page: this.page
+      })
       .then(res => {
-        this.goods = res.data.goods;
+        this.goods = res.data.content;
+        this.page_count = res.totalPages;
       })
       .catch(err => {});
   },
@@ -66,22 +64,35 @@ export default {
     store(v, p) {
       //获取到的当前商品数量和价格
       //用数组计算购物车的价格
-      this.sumlist[v] = this.list[v] * p;
+      this.sumlist[v] =this.list[v] * p;
       let s = 0;
       this.sumlist.forEach(item => {
         s += item;
       });
-      this.cart = s;
+      this.cart = s.toFixed(2);
 
       //这个传值不涉及后台请求只是实时更新页面购物车的值 失去焦点后请求后台在handleChange（）
       this.$emit("sumprice", this.cart);
     },
     load() {
       this.loading = true;
+      this.page += 1;
       setTimeout(() => {
-        this.count += 2;
+        this.axios
+          .post("getGoodsListBycid", {
+            cid:parseInt(this.cid),
+            page: this.page
+          })
+          .then(res => {
+            if (res.data.empty) {
+              this.loading = false;
+            } else {
+              this.goods = this.goods.concat(res.data.content);
+            }
+          })
+          .catch(err => {});
         this.loading = false;
-      }, 2000);
+      }, 1000);
     },
     handleChange() {
       //存入到购物车

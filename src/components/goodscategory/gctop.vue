@@ -1,7 +1,7 @@
 <template>
   <div class="top">
     <div class="list" v-for="(item,index) in data" :key="index">
-      <el-image class="img" :src="item.img" fit="cover"></el-image>
+      <el-image class="img" :src="item.picture" fit="cover"></el-image>
       <div>
         <span class="demonstration">{{item.name}}</span>
       </div>
@@ -19,10 +19,13 @@ export default {
   },
   components: {},
   created() {
+    //顶部分类加载
     this.axios
-      .get("/ms", {})
+      .post("ShopCategoryAll", {
+       
+      })
       .then(res => {
-        this.data = res.data.fenlei;
+       this.data = res.data.content;
       })
       .catch(err => {});
   },
