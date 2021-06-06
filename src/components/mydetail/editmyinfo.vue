@@ -96,6 +96,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .edinfo {
+  margin-top: 3%;
   background-color: #ffffff;
   .text {
     font-size: 25px;

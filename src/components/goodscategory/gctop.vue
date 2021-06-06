@@ -1,9 +1,9 @@
 <template>
   <div class="top">
-    <div class="list" v-for="(item,index) in data" :key="index">
+    <div class="list" v-for="(item,index) in data" :key="index" @click="getmain(item.id)">
       <el-image class="img" :src="item.picture" fit="cover"></el-image>
       <div>
-        <span class="demonstration">{{item.name}}</span>
+        <span class="demonstration" >{{item.name}}</span>
       </div>
     </div>
   </div>
@@ -14,11 +14,14 @@ export default {
   data() {
     return {
       data: [],
-      id: this.$route.query.id
+      id: this.$route.query.id,
+      cname:"",
+      goods:{}
     };
   },
   components: {},
   created() {
+     this.$emit("getcid", this.id);
     //顶部分类加载
     this.axios
       .post("ShopCategoryAll", {
@@ -29,7 +32,31 @@ export default {
       })
       .catch(err => {});
   },
-  methods: {}
+  methods: {
+    getmain(iid){
+        this.$emit("getcid", iid);
+        this.axios
+        .post('getShopcategoryByid',{
+          id:iid
+        }).then(res=>{
+           this.cname=res.data.name
+         this.$emit("getname", this.cname);
+        }).catch(err=>{
+
+        });
+        this.axios
+      .post("getGoodsListBycid", {
+        cid:parseInt(iid) ,
+        page: 0
+      })
+      .then(res => {
+        this.goods = res.data.content;
+         this.$emit("getgoods", this.goods);
+      })
+      .catch(err => {});
+       
+    }
+  }
 };
 </script>
 <style scoped lang="scss">

@@ -50,6 +50,7 @@ export default {
         })
         .then(res => {
           if (res.data.username != null) {
+             this.$message.success('登陆成功！');
             _this.loginForm.photo=res.data.photo
             _this.$store.commit("login", _this.loginForm); //第一个参数是要触发的方法，第二个是传递的参数
              window.localStorage.setItem("user", JSON.stringify(res.data));

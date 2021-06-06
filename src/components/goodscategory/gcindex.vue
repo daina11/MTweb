@@ -1,10 +1,10 @@
 <template>
 <div>
   <el-container>
-      <el-header><gctop></gctop></el-header>
-      <el-main><gcmain @sumprice="sumprice"></gcmain></el-main>
+      <el-header><gctop @getcid="getcid"  @getname="getname"  @getgoods="getgoods"></gctop></el-header>
+      <el-main><gcmain @sumprice="sumprice" :flid="cid" :catename="cname" :good="goods"></gcmain></el-main>
   </el-container>
-  <cart :price="pricesum"></cart>
+  <cart :price="pricesum" ></cart>
   </div>
 </template>
 <script>
@@ -15,20 +15,60 @@ export default {
   data() {
     return {
       id: this.$route.query.id,
-      pricesum:0
+      pricesum:0,
+      cid:'',
+      cname:'',
+      goods:{},
+      page:0,
     };
   },
   components: {
       gctop,
       gcmain,
-      cart
+      cart,
   },
-  created() {},
+  created() {
+    //  this.axios
+    //   .post("getGoodsListBycid", {
+    //     cid:parseInt(this.id) ,
+    //     page: this.page
+    //   })
+    //   .then(res => {
+    
+    //     this.goods = res.data.content;
+    //   })
+    //   .catch(err => {});
+  },
   methods: {
     sumprice(data){
       this.pricesum=data
-       console.log(111111111111)
-      console.log(this.pricesum)
+     
+    },
+    getcid(cidd){
+      this.cid=cidd
+      this.axios
+      .post("getGoodsListBycid", {
+        cid:parseInt(cidd) ,
+        page: this.page
+      })
+      .then(res => {
+        this.goods = res.data.content;
+         console.log(1111111)
+        console.log(this.goods)
+      })
+      .catch(err => {});
+      console.log(cidd)
+      console.log(2222222)
+      console.log(this.goods)
+    },
+    getgoodlist(cidd){
+
+    },
+    getname(name){
+        this.cname=name
+    },
+    getgoods(g){
+      this.goods=g
     }
   }
 };

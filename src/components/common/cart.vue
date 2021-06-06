@@ -4,7 +4,7 @@
       <i class="el-icon-shopping-cart-2">:</i>
       <div class="sum">¥{{price}}</div>
       <div>
-        <el-button  round>去结账</el-button>
+        <el-button round @click="jiezhang">去结账</el-button>
       </div>
     </div>
   </div>
@@ -12,9 +12,24 @@
 <script>
 export default {
   name: "cart",
-  props:["price"],
+  props: ["price"],
   data() {
     return {};
+  },
+  methods: {
+    jiezhang() {
+      if (this.$store.state.user.username) {
+        if (this.price === 0) {
+          this.$message.warning("购物车为空！");
+        } else {
+          this.$router.push({
+            path: "/payindex",
+          });
+        }
+      } else {
+        this.$message.error("请先登陆！");
+      }
+    }
   }
 };
 </script>
@@ -41,14 +56,14 @@ export default {
     .el-icon-shopping-cart-2 {
       float: left;
       margin: auto;
-          padding-bottom: 5%;
-              margin-left: -55%;
+      padding-bottom: 5%;
+      margin-left: -55%;
     }
-    .el-button{
-        margin-left: 20%;
-        background-color: #303133;
-        color: #ffffff;
-        border: 0;
+    .el-button {
+      margin-left: 20%;
+      background-color: #303133;
+      color: #ffffff;
+      border: 0;
     }
   }
 }

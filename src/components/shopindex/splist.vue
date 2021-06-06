@@ -3,12 +3,12 @@
     <el-row>
       <el-col :span="4" v-for="(item,index) in data" :key="index">
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
-          <img :src="item.goodimg" class="image" />
+          <img :src="item.shopimg" class="image" />
           <div style="padding: 14px;">
             <span class="sname">{{item.name}}</span>
             <div class="bottom clearfix">
               <time class="time">{{item.location}}</time>
-              <span class="money">￥{{item.price}}起</span>
+              <span class="money">免配送费</span>
             </div>
           </div>
         </el-card>
@@ -96,10 +96,10 @@ export default {
   line-height: 12px;
 }
 .money {
-  margin-top: 2%;
+  
   margin-left: 6%;
-  color: #f56c6c;
-  font-size: 20px;
+
+  font-size: 13px;
 }
 .clearfix {
   display: flex;

@@ -1,5 +1,7 @@
 <template>
   <div>
+    <div class="tilte_top" v-show="catename===''">{{catetoryname}}{{fid}}</div>
+    <div class="tilte_top" v-show="catename!='null'">{{catename}}{{fid}}</div>
     <div class="main" v-infinite-scroll="load" :infinite-scroll-disabled="loading">
       <el-row class="row" v-for="(item,index) in goods" :key="index">
         <el-col :span="24">
@@ -15,7 +17,7 @@
               <span class="number">数量：</span>
               <el-input-number
                 @blur="handleChange"
-                @change="store(index,item.price)"
+                @change="store(index,item.price,item.id)"
                 v-model="list[index]"
                 size="mini"
                 :min="0"
@@ -34,34 +36,49 @@
 <script>
 export default {
   name: "gcmain",
+  props: ["flid","catename","good"],
   data() {
     return {
+      goods:this.good,
+      fid:this.flid,
       cid: this.$route.query.id,
+      catetoryname:'',
       loading: false,
-      goods: {},
+     
       list: [],
       cart: 0,
       sumlist: [],
       page: 0,
-      page_count: ""
+      page_count: "",
+      //购物清单信息
+      item:[[]],
     };
   },
   computed: { 
   },
   created() {
+     console.log(this.goods)
     this.axios
       .post("getGoodsListBycid", {
         cid:parseInt(this.cid) ,
-        page: this.page
+        page:0
       })
       .then(res => {
         this.goods = res.data.content;
         this.page_count = res.totalPages;
       })
       .catch(err => {});
+       this.axios
+      .post("getShopcategoryByid", {
+        id:this.cid,
+      })
+      .then(res => {
+        this.catetoryname=res.data.name
+      })
+      .catch(err => {});
   },
   methods: {
-    store(v, p) {
+    store(v, p,id) {
       //获取到的当前商品数量和价格
       //用数组计算购物车的价格
       this.sumlist[v] =this.list[v] * p;
@@ -71,23 +88,30 @@ export default {
       });
       this.cart = s.toFixed(2);
 
+      var user=JSON.parse(window.localStorage.user)
+      let a={"goodsid":id,"goodsprice":p,"goodsnumber":this.list[v],"goodsamout":this.sumlist[v],"uid":user.id}
+      this.item[v]=a
+
       //这个传值不涉及后台请求只是实时更新页面购物车的值 失去焦点后请求后台在handleChange（）
       this.$emit("sumprice", this.cart);
     },
     load() {
+      console.log(this.flid)
       this.loading = true;
-      this.page += 1;
       setTimeout(() => {
+        this.page+=1
         this.axios
           .post("getGoodsListBycid", {
-            cid:parseInt(this.cid),
-            page: this.page
+            cid:parseInt(this.flid),
+            page: this.page-1
           })
           .then(res => {
+             this.page_count = res.totalPages;
             if (res.data.empty) {
               this.loading = false;
             } else {
               this.goods = this.goods.concat(res.data.content);
+             
             }
           })
           .catch(err => {});
@@ -98,11 +122,23 @@ export default {
       //存入到购物车
       //失去焦点后请求 减少请求次数
       this.$emit("sumprice", this.cart);
+      console.log(this.item)
+      this.axios.post('insertOrderItem',{
+        data:this.item
+      }).then(res=>{
+
+      }).catch(err=>{
+
+      })
     }
   }
 };
 </script>
 <style scoped lang="scss">
+.tilte_top{
+  font-size: 30px;
+  margin-bottom: 2%;
+}
 .g {
   .add {
     display: flex;

@@ -50,6 +50,14 @@ export default new Router({
           }
         },
         {
+          path: '/payindex',
+          name: 'payindex',
+          component: () => import('../components/pay/payindex'),
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
           path: '/sdindex',
           name: 'sdindex',
           component: () => import('../components/goodscategory/gcindex')
