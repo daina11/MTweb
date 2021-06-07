@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="tilte_top" v-show="catename===''">{{catetoryname}}{{fid}}</div>
-    <div class="tilte_top" v-show="catename!='null'">{{catename}}{{fid}}</div>
+    <div class="tilte_top" v-show="catename===''">{{catetoryname}}</div>
+    <div class="tilte_top" v-show="catename!='null'">{{catename}}</div>
     <div class="main" v-infinite-scroll="load" :infinite-scroll-disabled="loading">
       <el-row class="row" v-for="(item,index) in goods" :key="index">
         <el-col :span="24">
@@ -17,7 +17,7 @@
               <span class="number">数量：</span>
               <el-input-number
                 @blur="handleChange"
-                @change="store(index,item.price,item.id)"
+                @change="store(index,item.price,item.id,item.name)"
                 v-model="list[index]"
                 size="mini"
                 :min="0"
@@ -57,7 +57,6 @@ export default {
   computed: { 
   },
   created() {
-     console.log(this.goods)
     this.axios
       .post("getGoodsListBycid", {
         cid:parseInt(this.cid) ,
@@ -77,8 +76,23 @@ export default {
       })
       .catch(err => {});
   },
+// 监听父组件传值的变化实时改变子组件的值
+watch: {
+  good: {
+　　　handler (newValue, oldValue) {
+      this.goods = newValue
+    },
+　　　　deep: true
+　　},
+flid:{
+  handler(){
+    this.page=0
+  }
+}
+},
+
   methods: {
-    store(v, p,id) {
+    store(v, p,id,n) {
       //获取到的当前商品数量和价格
       //用数组计算购物车的价格
       this.sumlist[v] =this.list[v] * p;
@@ -89,21 +103,21 @@ export default {
       this.cart = s.toFixed(2);
 
       var user=JSON.parse(window.localStorage.user)
-      let a={"goodsid":id,"goodsprice":p,"goodsnumber":this.list[v],"goodsamout":this.sumlist[v],"uid":user.id}
+      let a={"goodsid":id,"goodsprice":p,"goodsnumber":this.list[v],"goodsamout":this.sumlist[v],"uid":user.id,"goodname":n}
       this.item[v]=a
-
+      console.log(n)
+      console.log(this.item)
       //这个传值不涉及后台请求只是实时更新页面购物车的值 失去焦点后请求后台在handleChange（）
       this.$emit("sumprice", this.cart);
     },
     load() {
-      console.log(this.flid)
       this.loading = true;
       setTimeout(() => {
         this.page+=1
         this.axios
           .post("getGoodsListBycid", {
             cid:parseInt(this.flid),
-            page: this.page-1
+            page: this.page
           })
           .then(res => {
              this.page_count = res.totalPages;

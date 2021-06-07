@@ -28,21 +28,20 @@ export default {
       cart,
   },
   created() {
-    //  this.axios
-    //   .post("getGoodsListBycid", {
-    //     cid:parseInt(this.id) ,
-    //     page: this.page
-    //   })
-    //   .then(res => {
+     this.axios
+      .post("getGoodsListBycid", {
+        cid:parseInt(this.id) ,
+        page: this.page
+      })
+      .then(res => {
     
-    //     this.goods = res.data.content;
-    //   })
-    //   .catch(err => {});
+        this.goods = res.data.content;
+      })
+      .catch(err => {});
   },
   methods: {
     sumprice(data){
       this.pricesum=data
-     
     },
     getcid(cidd){
       this.cid=cidd
@@ -53,16 +52,11 @@ export default {
       })
       .then(res => {
         this.goods = res.data.content;
-         console.log(1111111)
-        console.log(this.goods)
       })
       .catch(err => {});
-      console.log(cidd)
-      console.log(2222222)
-      console.log(this.goods)
     },
-    getgoodlist(cidd){
-
+    getgoodlist(g){
+ 
     },
     getname(name){
         this.cname=name
