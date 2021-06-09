@@ -1,37 +1,45 @@
 <template>
-  <div class="edinfo">
-    <div class="text">基本信息</div>
-    <div class="av">
-      <el-avatar :src="photo" class="avatar"></el-avatar>
-      <!-- <img :src="geren.avatar" alt /> -->
-      <el-upload
-        action="http://localhost:8081/api/upavatar"
-        :show-file-list="false"
-        :accept="'image/*'"
-        :on-success="handleSuccess"
-      >
-        <el-button
-          type="primary"
-          native-type="submit"
-          style="width: 100%;background: #505458;border: none"
-        >上传头像</el-button>
-      </el-upload>
-    </div>
+  <div class="main">
+    <el-tabs value="first" >
+      <el-tab-pane label="个人信息" name="first">
+        <div class="edinfo">
+          <div class="text">基本信息</div>
+          <div class="av">
+            <el-avatar :src="photo" class="avatar"></el-avatar>
+            <!-- <img :src="geren.avatar" alt /> -->
+            <el-upload
+              action="http://localhost:8081/api/upavatar"
+              :show-file-list="false"
+              :accept="'image/*'"
+              :on-success="handleSuccess"
+            >
+              <el-button
+                type="primary"
+                native-type="submit"
+                style="width: 100%;background: #505458;border: none"
+              >上传头像</el-button>
+            </el-upload>
+          </div>
 
-    <!-- 信息编辑框 -->
-    <div class="inForm">
-    <el-form label-position="right" label-width="80px" :model="infoForm" >
-      <el-form-item label="名称">
-        <el-input v-model="infoForm.username"></el-input>
-      </el-form-item>
-      <el-form-item label="邮箱">
-        <el-input v-model="infoForm.email"></el-input>
-      </el-form-item>
-      <el-form-item>
-    <el-button class="submit" type="primary" @click="submitForm()">保存修改</el-button>
-  </el-form-item>
-    </el-form>
-  </div>
+          <!-- 信息编辑框 -->
+          <div class="inForm">
+            <el-form label-position="right" label-width="80px" :model="infoForm">
+              <el-form-item label="名称">
+                <el-input v-model="infoForm.username"></el-input>
+              </el-form-item>
+              <el-form-item label="邮箱">
+                <el-input v-model="infoForm.email"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button class="submit" type="primary" @click="submitForm()">保存修改</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="个人订单" name="second">个人订单</el-tab-pane>
+      
+    </el-tabs>
   </div>
 </template>
 <script>
@@ -40,9 +48,9 @@ export default {
   data() {
     return {
       photo: "",
-      infoForm:{
-        username:'',
-        email:''
+      infoForm: {
+        username: "",
+        email: ""
       }
     };
   },
@@ -62,39 +70,49 @@ export default {
         })
         .catch(err => {});
       this.photo = result;
-    }
-    ,
+    },
     //提交修改
-    submitForm(){
+    submitForm() {
       var user = JSON.parse(window.localStorage.user);
       this.axios
         .post("/edinfoForm", {
           username: this.infoForm.username,
           id: user.id,
-          email:this.infoForm.email
+          email: this.infoForm.email
         })
-        .then(res=>{
-             if (res.data!='') {
-                this.$message({
-                  message: "修改信息成功！",
-                  type: "success"
-                });
-               window.localStorage.setItem("user", JSON.stringify(res.data));
-              } else {
-                this.$message.error("用户名已存在，请重新输入！");
-              }
-        }).catch(err=>{})
+        .then(res => {
+          if (res.data != "") {
+            this.$message({
+              message: "修改信息成功！",
+              type: "success"
+            });
+            window.localStorage.setItem("user", JSON.stringify(res.data));
+          } else {
+            this.$message.error("用户名已存在，请重新输入！");
+          }
+        })
+        .catch(err => {});
     }
   },
   created() {
     var user = JSON.parse(window.localStorage.user);
     this.photo = user.photo;
-    this.infoForm.username=user.username
-    this.infoForm.email=user.email
+    this.infoForm.username = user.username;
+    this.infoForm.email = user.email;
   }
 };
 </script>
 <style scoped lang="scss">
+.main{
+  margin: 2% auto;
+  .el-tabs{
+    background-color: #ffff;
+    margin: 2% 2%;
+    .el-tab-pane{
+    
+    }
+  }
+}
 .edinfo {
   margin-top: 3%;
   background-color: #ffffff;
@@ -107,13 +125,13 @@ export default {
   .av {
     padding: 1%;
   }
-  .inForm{
+  .inForm {
     margin: 0 auto;
     padding: 1%;
     width: 30%;
   }
 }
-.submit{
-  margin-left: -16%
+.submit {
+  margin-left: -16%;
 }
 </style>

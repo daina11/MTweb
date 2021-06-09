@@ -24,7 +24,7 @@
       </el-table-column>
     </el-table>
     <div class="sub">
-      <el-button type="success">确认支付</el-button>
+      <el-button type="success" @click="sub">确认支付</el-button>
     </div>
   </div>
 </template>
@@ -33,12 +33,31 @@ export default {
   name: "payindex",
   data() {
     return {
-      tableData: [
-      ]
+      tableData: []
     };
   },
   components: {},
   methods: {
+    sub(){
+      window.localStorage.removeItem("money")
+      let uid=0
+      let goodsid = ""
+      this.tableData.forEach(element => {
+        uid=element.uid
+        goodsid+=element.goodsid+","
+        console.log(element)
+      });
+      console.log(11111111)
+      console.log(goodsid)
+      this.axios.post('addOrder',{
+        uid:uid,
+        goodsid:goodsid
+      }).then(res=>{
+         this.$router.push({
+        path: "my_detail",
+      });
+      }).catch({})
+    },
     getSummaries(param) {
       const { columns, data } = param;
       const sums = [];
@@ -73,20 +92,46 @@ export default {
 
       return sums;
     },
-    deleteRow(index,data){
-        console.log(index,data)
+    deleteRow(index, data) {
+      this.axios
+        .post("deleteOrderItem", {
+          itemid: data[index].id
+        })
+        .then(res => {
+          //跟新表格数据
+          var user = JSON.parse(window.localStorage.user);
+          let id = user.id;
+          this.axios
+            .post("getPayItem", {
+              uid: id
+            })
+            .then(re => {
+              this.tableData = re.data;
+            })
+            .catch({});
+        })
+        .catch({});
+    }
+  },
+  watch: {
+    tableData: {
+      handler(newValue, oldValue) {
+        this.tableData = newValue;
+      },
+      deep: true
     }
   },
   created() {
-      var user=JSON.parse(window.localStorage.user)
-      let id = user.id
-        this.axios.post('getPayItem',{
-            uid:id
-        }).then(res=>{
-            this.tableData=res.data
-        }).catch({
-
-        })
+    var user = JSON.parse(window.localStorage.user);
+    let id = user.id;
+    this.axios
+      .post("getPayItem", {
+        uid: id
+      })
+      .then(res => {
+        this.tableData = res.data;
+      })
+      .catch({});
   }
 };
 </script>

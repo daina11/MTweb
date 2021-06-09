@@ -57,6 +57,7 @@ export default {
   computed: { 
   },
   created() {
+ 
     this.axios
       .post("getGoodsListBycid", {
         cid:parseInt(this.cid) ,
@@ -135,6 +136,7 @@ flid:{
     handleChange() {
       //存入到购物车
       //失去焦点后请求 减少请求次数
+      window.localStorage.setItem("money", JSON.stringify(this.cart));
       this.$emit("sumprice", this.cart);
       console.log(this.item)
       this.axios.post('insertOrderItem',{

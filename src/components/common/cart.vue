@@ -2,7 +2,7 @@
   <div class="cart">
     <div class="text-a">
       <i class="el-icon-shopping-cart-2">:</i>
-      <div class="sum">¥{{price}}</div>
+      <div class="sum">¥{{cart}}</div>
       <div>
         <el-button round @click="jiezhang">去结账</el-button>
       </div>
@@ -14,12 +14,29 @@ export default {
   name: "cart",
   props: ["price"],
   data() {
-    return {};
+    return {
+      cart:this.price
+    };
+  },
+  created(){
+    if(!window.localStorage.money){
+      return
+    }
+    var money=JSON.parse(window.localStorage.money)
+    this.cart=money
+  },
+  watch:{
+    price:{
+       handler (newValue, oldValue) {
+      this.cart = newValue
+    },
+    }
+  
   },
   methods: {
     jiezhang() {
       if (this.$store.state.user.username) {
-        if (this.price === 0) {
+        if (this.cart === 0) {
           this.$message.warning("购物车为空！");
         } else {
           this.$router.push({
