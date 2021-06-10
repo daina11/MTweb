@@ -1,7 +1,7 @@
 <template>
     <div class="footer">
         <el-row>
-          <h1>@copyright <span>daina</span></h1> 
+          <h1>@copyright <span>XXXXXXXXXXXXXXXX</span></h1> 
         </el-row>
     </div>
 </template>

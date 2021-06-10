@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <el-tabs value="first" >
+    <el-tabs value="first">
       <el-tab-pane label="个人信息" name="first">
         <div class="edinfo">
           <div class="text">基本信息</div>
@@ -37,8 +37,17 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="个人订单" name="second">个人订单</el-tab-pane>
-      
+      <el-tab-pane label="个人订单" name="second">
+        <el-timeline class="tiemline">
+          <el-timeline-item  placement="top" class="line-item"v-for="(item,index) in order" :key="index">
+            <el-card>
+              <h4>订单详情</h4>
+              <p>{{item}}</p>
+            </el-card>
+          </el-timeline-item>
+
+        </el-timeline>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -50,8 +59,10 @@ export default {
       photo: "",
       infoForm: {
         username: "",
-        email: ""
-      }
+        email: "",
+  
+      },
+           order:[]
     };
   },
   methods: {
@@ -99,17 +110,32 @@ export default {
     this.photo = user.photo;
     this.infoForm.username = user.username;
     this.infoForm.email = user.email;
+     this.axios.post('getOrderItem',{
+       uid:user.id
+     }).then(res=>{
+      
+       this.order=res.data
+        console.log(this.order)
+     }).catch({
+
+     })
   }
 };
 </script>
 <style scoped lang="scss">
-.main{
+.tiemline{
+  margin: 3%  20%;
+  .div{
+    float: left;
+  }
+}
+.main {
   margin: 2% auto;
-  .el-tabs{
+  min-height: 530px;
+  .el-tabs {
     background-color: #ffff;
     margin: 2% 2%;
-    .el-tab-pane{
-    
+    .el-tab-pane {
     }
   }
 }

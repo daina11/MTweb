@@ -1,23 +1,23 @@
 <template>
-  <div>
-    <edinfo></edinfo>
-    <vfooter></vfooter>
+  <div class="main">
+    <smian></smian>
   </div>
 </template>
 <script>
-import edinfo from './editmyinfo'
-import vfooter from '../common/footer'
+import smian from './shopmain'
 export default {
-  name: "mdindex",
+  name: "shopindex",
   data() {
     return {};
   },
   components: {
-   edinfo,
-   vfooter
+    smian,
   },
   created() {}
 };
 </script>
 <style scoped lang="scss">
+.main{
+  margin: 0 10%;
+}
 </style>

@@ -2,7 +2,7 @@
   <div class="main">
     <el-row>
       <el-col :span="4" v-for="(item,index) in data" :key="index">
-        <el-card :body-style="{ padding: '0px' }" shadow="hover">
+        <el-card :body-style="{ padding: '0px' }" shadow="hover" @click.native="goShop(item.id)">
           <img :src="item.shopimg" class="image" />
           <div style="padding: 14px;">
             <span class="sname">{{item.name}}</span>
@@ -45,9 +45,9 @@ export default {
       .catch(err => {});
   },
   methods: {
-    todetail(id) {
+    goShop(id) {
       this.$router.push({
-        path: "sdindex",
+        path: "/shopindex",
         query: { id: id }
       });
     },

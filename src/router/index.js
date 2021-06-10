@@ -42,6 +42,14 @@ export default new Router({
           }
         },
         {
+          path: '/shopindex',
+          name: 'shopindex',
+          component: () => import('../components/shangdian/shopindex'),
+          meta: {
+            requireAuth: false
+          }
+        },
+        {
           path: '/my_detail',
           name: 'mdindex',
           component: () => import('../components/mydetail/mdindex'),

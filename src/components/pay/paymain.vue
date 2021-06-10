@@ -45,10 +45,7 @@ export default {
       this.tableData.forEach(element => {
         uid=element.uid
         goodsid+=element.goodsid+","
-        console.log(element)
       });
-      console.log(11111111)
-      console.log(goodsid)
       this.axios.post('addOrder',{
         uid:uid,
         goodsid:goodsid
