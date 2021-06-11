@@ -1,23 +1,36 @@
 <template>
   <div class="main">
-    <smian></smian>
+    <smian :sid="id"></smian>
   </div>
 </template>
 <script>
 import smian from './shopmain'
 export default {
   name: "shopindex",
+  
   data() {
-    return {};
+    return {
+      id:this.$route.query.id,
+       pricesum:0,
+    };
   },
   components: {
     smian,
   },
-  created() {}
+  created() {
+
+  },
+  methods:{
+     sumprice(data){
+      this.pricesum=data
+    },
+  }
 };
 </script>
 <style scoped lang="scss">
 .main{
-  margin: 0 10%;
+  margin: 0 8%;
+
+ 
 }
 </style>
