@@ -63,6 +63,11 @@ export default {
     //搜索
     search() {
       console.log(this.keywords);
+        this.$router.push({
+        path: "search",
+        query: { keywords: this.keywords }
+        
+      }).catch(err=>{});
     },
     //退出登陆
     logout() {

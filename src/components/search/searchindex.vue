@@ -1,0 +1,150 @@
+<template>
+  <div class="main">
+    <el-row>
+      <el-col :span="24" v-for="(item,index) in data" :key="index">
+        <el-card :body-style="{ padding: '0px' }" shadow="hover" @click.native="goShop(item.id)">
+          <div><img :src="item.shopimg" class="image" /></div>
+          <div style="padding: 14px;margin-left: 50%;width: 30%;">
+            <span class="sname">{{item.name}}</span>
+            <div class="bottom clearfix">
+              <time class="time">{{item.location}}</time>
+              <span class="money">免配送费</span>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+    <div class="more">
+      <el-button type="primary" round v-if="page<page_count-1" @click="loadMore">加载更多...</el-button>
+      <el-button type="info" round plain disabled v-else>没有更多了</el-button>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  name: "searchindex",
+  data() {
+    return {
+      keywords: this.$route.query.keywords,
+      data:[],
+      page:0,
+    page_count: '',
+    };
+  },
+  watch: {
+    $route(to, from) {
+      this.keywords = to.query.keywords;
+      this.data=""
+          this.axios
+        .post("getSearchShopsList", {
+          //把页数传递到后台
+          page:0,
+          keywords:this.keywords,
+         
+        })
+        .then(res => {
+          this.data = res.data.content
+           this.page_count=res.data.totalPages
+        });
+    }
+  },
+  components: {},
+  created() {
+            this.axios
+        .post("getSearchShopsList", {
+          //把页数传递到后台
+          page: 0,
+          keywords:this.keywords,
+         
+        })
+        .then(res => {
+          this.data = res.data.content
+           this.page_count=res.data.totalPages
+        });
+  },
+  methods: {
+      
+    goShop(id) {
+      this.$router.push({
+        path: "/shopindex",
+        query: { id: id }
+      });
+    },
+    loadMore() {
+      this.page += 1;
+      this.axios
+        .post("getSearchShopsList", {
+          //把页数传递到后台
+          page: this.page,
+           keywords:this.keywords
+        })
+        .then(res => {
+          this.data = this.data.concat(res.data.content);
+            this.page_count=res.data.totalPages
+        });
+    }
+  }
+  
+};
+</script>
+<style scoped lang="scss">
+.el-col{
+    padding: 0 20%;
+}
+.main {
+  margin: 0 10%;
+}
+
+.more {
+  padding: 20px;
+}
+.main {
+  margin-top: 50px;
+  background-color: white;
+}
+.el-card {
+  margin: 20px;
+  display: flex
+}
+/deep/ .el-card__body {
+  margin: 10px;
+  width: 100%;
+  display: flex;
+}
+.time {
+  max-width: 50%;
+  float: left;
+  font-size: 13px;
+  color: #606266;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.bottom {
+  margin-top: 13px;
+  line-height: 12px;
+}
+.money {
+  margin-left: 6%;
+
+  font-size: 13px;
+}
+.clearfix {
+  display: flex;
+  line-height: 20px;
+  margin: 5px;
+}
+.sname {
+  color: #303133;
+  font-size: 30px;
+  font-weight: 500;
+}
+.image {
+  height: 160px;
+  width: 160px;
+  display: block;
+}
+</style>

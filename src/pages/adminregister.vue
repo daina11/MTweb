@@ -11,7 +11,7 @@
       @key.enter.native="register"
       :hide-required-asterisk="true"
     >
-      <h3 class="login_title">用户注册</h3>
+      <h3 class="login_title">商家注册</h3>
       
       <el-form-item label="用户名:" prop="username">
         <el-input v-model="ruleForm.username" autocomplete="off"></el-input>
@@ -22,9 +22,7 @@
       <el-form-item label="确认密码:" prop="checkPass">
         <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="邮箱:" prop="email">
-        <el-input v-model="ruleForm.email"></el-input>
-      </el-form-item>
+     
 
       <el-form-item style="width: 80%">
         <el-button
@@ -106,10 +104,10 @@ export default {
         if (valid) {
           //console.log(this.ruleForm);
           this.axios
-            .post("/register", {
+            .post("/adminregister", {
               username: this.ruleForm.username,
               password: this.ruleForm.pass,
-              email: this.ruleForm.email
+             
             })
             .then(res => {
               console.log(res);

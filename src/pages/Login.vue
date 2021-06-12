@@ -22,7 +22,8 @@
           @click="login"
         >登录</el-button>
       </el-form-item>
-       <el-link type="primary" href="/register" >还没注册？点击注册！</el-link>
+       <el-link type="primary" href="/register" >还没注册？点击普通用户注册！</el-link>
+       <el-link type="primary" href="/adminregister" >还没注册？点击商家用户注册！</el-link>
     </el-form>
   </div>
 </template>

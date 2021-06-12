@@ -100,11 +100,18 @@ export default {
       //获取到的当前商品数量和价格
       //用数组计算购物车的价格
       this.sumlist[v] =this.list[v] * p;
-      let s = 0;
+      
+       var s =0
+      if(window.localStorage.money==undefined){
+         s = 0
+      }else{
+         var money=JSON.parse(window.localStorage.money)
+         s = money;
+      }
       this.sumlist.forEach(item => {
         s += item;
       });
-      this.cart = s.toFixed(2);
+      this.cart = parseFloat(s.toFixed(2))
 
       var user=JSON.parse(window.localStorage.user)
       let a={"goodsid":id,"goodsprice":p,"goodsnumber":this.list[v],"goodsamout":this.sumlist[v],"uid":user.id,"goodname":n}

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/pages/Login'
 import Register from '@/pages/register'
+import adminRegister from '@/pages/adminregister'
 import Home from '@/pages/Home'
 Vue.use(Router)
 
@@ -21,6 +22,11 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/adminregister',
+      name: 'adminRegister',
+      component: adminRegister
     },
     {
       path: '/login',
@@ -63,6 +69,14 @@ export default new Router({
           component: () => import('../components/pay/payindex'),
           meta: {
             requireAuth: true
+          }
+        },
+        {
+          path: '/search',
+          name: 'search',
+          component: () => import('../components/search/searchindex'),
+          meta: {
+            requireAuth: false
           }
         },
         {
